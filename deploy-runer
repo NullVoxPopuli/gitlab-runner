@@ -1,0 +1,13 @@
+#!/bin/bash
+
+# make dir to place rendered yaml files in
+mkdir -p ./.deploy
+
+# take env and put it in yaml
+eval "echo \"$(< ./k8s/configmap.yaml.tpl)\"" > ./.deploy/configmap.yaml
+
+# copy the rest
+cp ./k8s/*.yaml ./.deploy/
+
+# actually deploy
+kubectl create -f .deploy/

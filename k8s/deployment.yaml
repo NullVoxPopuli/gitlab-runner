@@ -1,0 +1,53 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: gitlab-runner
+  namespace: gitlab-runner
+spec:
+  revisionHistoryLimit: 0
+  progressDeadlineSeconds: 300
+  replicas: 1
+  selector:
+    matchLabels:
+      name: gitlab-runner
+  template:
+    metadata:
+      labels:
+        name: gitlab-runner
+    spec:
+      containers:
+      - args:
+        - run
+        image: gitlab/gitlab-runner:latest
+        imagePullPolicy: Always
+        name: gitlab-runner
+        volumeMounts:
+        # - name: docker-graph-storage
+        #   mountPath: /var/lib/docker
+        - name: docker-sock
+          mountPath: /var/run/docker.sock
+        - name: config
+          mountPath: /etc/gitlab-runner
+        - name: cacerts
+          mountPath: /etc/ssl/certs
+          readOnly: true
+        env:
+        - name: var
+          value: hey
+
+      volumes:
+      - configMap:
+          name: gitlab-runner
+        name: config
+      - hostPath:
+          path: /usr/share/ca-certificates/mozilla
+        name: cacerts
+
+      # - name: config
+      #   hostPath:
+      #     path: /srv/gitlab-runner/config
+      # - name: docker-graph-storage
+      #   emptyDir: {}
+      - name: docker-sock
+        hostPath:
+          path: /var/run/docker.sock
