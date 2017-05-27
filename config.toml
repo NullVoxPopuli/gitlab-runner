@@ -1,0 +1,30 @@
+concurrent = 4
+check_interval = 0
+
+[[runners]]
+  name = "Docker Runner"
+  url = "https://gitlab.com/ci"
+  token = "0d371afeb8f5603492668fb3eb349a"
+  executor = "docker"
+  [runners.docker]
+    tls_verify = false
+    image = "docker:dind"
+    privileged = true
+    disable_cache = false
+    volumes = ["/var/run/docker.sock:/var/run/docker.sock", "/cache"]
+    shm_size = 0
+  [runners.cache]
+
+[[runners]]
+  name = "Docker Runner"
+  url = "https://gitlab.com/ci"
+  token = "9c6c4d44558849784096c4a9b07a7b"
+  executor = "docker"
+  [runners.docker]
+    tls_verify = false
+    image = "gitlab/dind:latest"
+    privileged = true
+    disable_cache = false
+    volumes = ["/var/run/docker.sock:/var/run/docker.sock", "/cache"]
+    shm_size = 0
+  [runners.cache]

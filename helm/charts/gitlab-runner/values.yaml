@@ -7,18 +7,18 @@ image: gitlab/gitlab-runner:alpine-v9.1.0
 ## 'Always' if imageTag is 'latest', else set to 'IfNotPresent'
 ## ref: http://kubernetes.io/docs/user-guide/images/#pre-pulling-images
 ##
-imagePullPolicy: always
+# imagePullPolicy:
 
 ## The GitLab Server URL (with protocol) that want to register the runner against
 ## ref: https://docs.gitlab.com/runner/commands/README.html#gitlab-runner-register
 ##
-gitlabURL: https://gitlab.com/ci
+# gitlabURL: http://gitlab.your-domain.com/
 
 ## The Registration Token for adding new Runners to the GitLab Server. This must
 ## be retreived from your GitLab Instance.
 ## ref: https://docs.gitlab.com/ce/ci/runners/README.html#creating-and-registering-a-runner
 ##
-runnerRegistrationToken: "my-repo-token"
+runnerRegistrationToken: f31QPRizyLSXj2AuH6oM
 
 ## Configure the maximum number of concurrent jobs
 ## ref: https://docs.gitlab.com/runner/configuration/advanced-configuration.html#the-global-section
@@ -50,35 +50,35 @@ runners:
 
   ## Build Container specific configuration
   ##
-#   builds:
-#     # cpuLimit: 200m
-#     # memoryLimit: 256Mi
-#     cpuRequests: 100m
-#     memoryRequests: 128Mi
-#
-#   ## Service Container specific configuration
-#   ##
-#   services:
-#     # cpuLimit: 200m
-#     # memoryLimit: 256Mi
-#     cpuRequests: 100m
-#     memoryRequests: 128Mi
-#
-#   ## Helper Container specific configuration
-#   ##
-#   helpers:
-#     # cpuLimit: 200m
-#     # memoryLimit: 256Mi
-#     cpuRequests: 100m
-#     memoryRequests: 128Mi
-#
-# ## Configure resource requests and limits
-# ## ref: http://kubernetes.io/docs/user-guide/compute-resources/
-# ##
-# resources:
-#   # limits:
-#   #   memory: 256Mi
-#   #   cpu: 200m
-#   requests:
-#     memory: 128Mi
-#     cpu: 100m
+  builds:
+    # cpuLimit: 200m
+    # memoryLimit: 256Mi
+    cpuRequests: 100m
+    memoryRequests: 128Mi
+
+  ## Service Container specific configuration
+  ##
+  services:
+    # cpuLimit: 200m
+    # memoryLimit: 256Mi
+    cpuRequests: 100m
+    memoryRequests: 128Mi
+
+  ## Helper Container specific configuration
+  ##
+  helpers:
+    # cpuLimit: 200m
+    # memoryLimit: 256Mi
+    cpuRequests: 100m
+    memoryRequests: 128Mi
+
+## Configure resource requests and limits
+## ref: http://kubernetes.io/docs/user-guide/compute-resources/
+##
+resources:
+  # limits:
+  #   memory: 256Mi
+  #   cpu: 200m
+  requests:
+    memory: 128Mi
+    cpu: 100m

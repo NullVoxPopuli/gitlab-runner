@@ -1,0 +1,18 @@
+#!/bin/bash
+
+# make dir to place rendered yaml files in
+mkdir -p ./.deploy
+
+# take env and put it in yaml
+eval "echo \"$(< ./configs/configmap.yaml.tpl)\"" > ./.deploy/configmap.yaml
+eval "echo \"$(< ./configs/deployment.yaml.tpl)\"" > ./.deploy/deployment.yaml
+eval "echo \"$(< ./configs/secrets.yaml.tpl)\"" > ./.deploy/secrets.yaml
+
+# copy the rest
+cp ./configs/*.yaml ./.deploy/
+
+# actually deploy
+kubectl create -f .deploy/namespace.yaml
+kubectl create -f .deploy/configmap.yaml
+kubectl create -f .deploy/secrets.yaml
+kubectl create -f .deploy/deployment.yaml

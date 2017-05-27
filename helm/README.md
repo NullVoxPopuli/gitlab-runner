@@ -6,3 +6,5 @@
 ./helm upgrade gitlab-runner --set gitlabUrl=https://gitlab.com/ci,runnerRegistrationToken=my-repo-token gitlab/gitlab-runner
 
 ```
+
+this sets up the kubernetes executor.
