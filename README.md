@@ -1,10 +1,20 @@
-## Installation / Running
+### Starting The Runner
 
 ```bash
-./deploy-runner
+./gitlab-runner daemon
+./gitlab-runner register
 ```
 
-## Delete Everything
+### Shutting Down
+
 ```bash
-kubectl delete -f .deploy/
+./gitlab-runner down
+```
+
+### Running Locally
+
+Copy `gitlab-runner`, `config.toml`, and `docker-compose.gitlab.yml` to your project's directory
+
+```bash
+./gitlab-runner go
 ```
