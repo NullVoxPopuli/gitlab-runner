@@ -11,7 +11,7 @@ check_interval = 0
     image = "docker:dind"
     privileged = true
     disable_cache = false
-    volumes = ["/var/run/docker.sock:/var/run/docker.sock", "/cache"]
+    volumes = ["/var/run/docker.sock:/var/run/docker.sock", "/home/gitlab-runner:/home/gitlab-runner", "/cache"]
     shm_size = 0
   [runners.cache]
 
@@ -19,6 +19,20 @@ check_interval = 0
   name = "Docker Runner"
   url = "https://gitlab.com/ci"
   token = "9c6c4d44558849784096c4a9b07a7b"
+  executor = "docker"
+  [runners.docker]
+    tls_verify = false
+    image = "gitlab/dind:latest"
+    privileged = true
+    disable_cache = false
+    volumes = ["/var/run/docker.sock:/var/run/docker.sock", "/cache"]
+    shm_size = 0
+  [runners.cache]
+
+[[runners]]
+  name = "Docker Runner"
+  url = "https://gitlab.com/ci"
+  token = "b65fee21f45b85e271eab1378fba21"
   executor = "docker"
   [runners.docker]
     tls_verify = false

@@ -1,5 +1,0 @@
-#!/bin/bash
-kubectl delete -f .deploy/namespace.yaml
-kubectl delete -f .deploy/configmap.yaml
-kubectl delete -f .deploy/secrets.yaml
-kubectl delete -f .deploy/deployment.yaml
