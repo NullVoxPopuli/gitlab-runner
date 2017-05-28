@@ -6,6 +6,7 @@
 # - register
 # - down
 # - go
+# -link project/path
 #
 # Normal Order of Execution:
 # 1. daemon
@@ -19,29 +20,39 @@ given_command=$1
 config=docker-compose.gitlab.yml
 
 function docko {
-  docker-compose $*
+	docker-compose $*
 }
 
 case $given_command in
-  down)     docko -f $config down --remove-orphans;;
-  daemon)   docko -f $config up -d;;
-  start)    docko -f $config up;;
-  go)       docko -f $config \
-    run --rm gitlab-runner exec docker \
-      --docker-image "gitlab/dind:latest" \
-      --docker-volumes "[/var/run/docker.sock:/var/run/docker.sock, /home/gitlab-runner:/home/gitlab-runner]" \
-      --docker-privileged ;;
-  register) docko -f $config \
-    exec gitlab-runner bash -c '\
-      gitlab-runner register \
-        -n \
-        --url "$CI_SERVER_URL" \
-        --registration-token "$REGISTRATION_TOKEN" \
-        --run-untagged \
-        --executor docker \
-        --description "Docker Runner" \
-        --docker-image "gitlab/dind:latest" \
-        --docker-volumes "[/var/run/docker.sock:/var/run/docker.sock, /home/gitlab-runner:/home/gitlab-runner]" \
-        --docker-privileged' ;;
-  *) echo 'command not recognized' ;;
+	down)   docko -f $config down --remove-orphans;;
+	daemon) docko -f $config up -d;;
+	start)  docko -f $config up;;
+	link)
+		ln -s "$PWD/gitlab-runner" "$2/gitlab-runner"
+		ln -s "$PWD/config.toml" "$2/config.toml"
+		ln -s "$PWD/docker-compose.gitlab.yml" "$2/docker-compose.gitlab.yml"
+		;;
+	go)
+		docko -f $config run --rm gitlab-runner exec docker \
+			--docker-image "gitlab/dind:latest" \
+			--docker-volumes "[/var/run/docker.sock:/var/run/docker.sock, /home/gitlab-runner:/home/gitlab-runner]" \
+			--docker-privileged
+		;;
+	register)
+		registerCommand=$(cat <<-EOM
+				/entrypoint register -n \
+					--url \$CI_SERVER_URL \
+					--registration-token \$REGISTRATION_TOKEN \
+					--run-untagged \
+					--executor docker \
+					--description "Docker Runner" \
+					--docker-image "gitlab/dind:latest" \
+					--docker-volumes "[/var/run/docker.sock:/var/run/docker.sock, /home/gitlab-runner:/home/gitlab-runner]" \
+					--docker-privileged
+			EOM
+			)
+
+		docko -f $config exec gitlab-runner bash -c $registerCommand
+		;;
+	*) echo 'command not recognized' ;;
 esac
