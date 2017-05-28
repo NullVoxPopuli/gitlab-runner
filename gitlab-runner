@@ -6,6 +6,15 @@
 # - register
 # - down
 # - go
+#
+# Normal Order of Execution:
+# 1. daemon
+# 2. register
+#
+# To run on a local project:
+# - ln -s path/to/gitlab-runner ./gitlab-runner
+# - ln -s path/to/config.toml ./config.toml
+# - ln -s path/to/docker-compose.gitlab.yml ./docker-compose.gitlab.yml
 given_command=$1
 config=docker-compose.gitlab.yml
 
