@@ -4,41 +4,26 @@ check_interval = 0
 [[runners]]
   name = "Docker Runner"
   url = "https://gitlab.com/ci"
-  token = "0d371afeb8f5603492668fb3eb349a"
-  executor = "docker"
-  [runners.docker]
-    tls_verify = false
-    image = "docker:dind"
-    privileged = true
-    disable_cache = false
-    volumes = ["/var/run/docker.sock:/var/run/docker.sock", "/home/gitlab-runner:/home/gitlab-runner", "/cache"]
-    shm_size = 0
+  token = "f31QPRizyLSXj2AuH6oM"
+  executor = "shell"
+  builds_dir = "/home/gitlab-runner/build"
+  cache_dir = "/home/gitlab-runner/cache"
   [runners.cache]
 
 [[runners]]
-  name = "Docker Runner"
+  name = "Shell Runner"
   url = "https://gitlab.com/ci"
-  token = "9c6c4d44558849784096c4a9b07a7b"
-  executor = "docker"
-  [runners.docker]
-    tls_verify = false
-    image = "gitlab/dind:latest"
-    privileged = true
-    disable_cache = false
-    volumes = ["/var/run/docker.sock:/var/run/docker.sock", "/cache"]
-    shm_size = 0
+  token = "14e276dc04d55314aa2f6caa50f36b"
+  executor = "shell"
+  builds_dir = "/home/gitlab-runner/build"
+  cache_dir = "/home/gitlab-runner/cache"
   [runners.cache]
 
 [[runners]]
-  name = "Docker Runner"
+  name = "Shell Runner"
   url = "https://gitlab.com/ci"
-  token = "b65fee21f45b85e271eab1378fba21"
-  executor = "docker"
-  [runners.docker]
-    tls_verify = false
-    image = "gitlab/dind:latest"
-    privileged = true
-    disable_cache = false
-    volumes = ["/var/run/docker.sock:/var/run/docker.sock", "/cache"]
-    shm_size = 0
+  token = "b93748b4f290f15a82129073bfeff8"
+  executor = "shell"
+  builds_dir = "/home/gitlab-runner/build"
+  cache_dir = "/home/gitlab-runner/cache"
   [runners.cache]

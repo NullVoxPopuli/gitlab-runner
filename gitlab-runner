@@ -23,10 +23,23 @@ function docko {
 	docker-compose $*
 }
 
+# gitlab-runner register \
+# --url "https://gitlab.com/ci" \
+# --non-interactive \
+# --registration-token "f31QPRizyLSXj2AuH6oM" \
+# --description "Shell Runner" \
+# --executor shell \
+# --builds-dir /home/gitlab-runner/build \
+# --cache-dir /home/gitlab-runner/cache
+#
+# gitlab-runner run --working-directory /home/gitlab-runner
+
 case $given_command in
 	down)   docko -f $config down --remove-orphans;;
 	daemon) docko -f $config up -d;;
 	start)  docko -f $config up;;
+	run)    docko -f $config run gitlab-runner ${@:2};;
+	bash)   docko -f $config run --rm gitlab-runner bash;;
 	link)
 		ln -s "$PWD/gitlab-runner" "$2/gitlab-runner"
 		ln -s "$PWD/config.toml" "$2/config.toml"
@@ -38,21 +51,19 @@ case $given_command in
 			--docker-volumes "[/var/run/docker.sock:/var/run/docker.sock, /home/gitlab-runner:/home/gitlab-runner]" \
 			--docker-privileged
 		;;
-	register)
-		registerCommand=$(cat <<-EOM
-				/entrypoint register -n \
-					--url \$CI_SERVER_URL \
-					--registration-token \$REGISTRATION_TOKEN \
-					--run-untagged \
-					--executor docker \
-					--description "Docker Runner" \
-					--docker-image "gitlab/dind:latest" \
-					--docker-volumes "[/var/run/docker.sock:/var/run/docker.sock, /home/gitlab-runner:/home/gitlab-runner]" \
-					--docker-privileged
-			EOM
-			)
-
-		docko -f $config exec gitlab-runner bash -c $registerCommand
+	up)
+		docko -f $config run --rm gitlab-runner bash -c '\
+			gitlab-runner register \
+				--url "https://gitlab.com/ci" \
+				--non-interactive \
+				--registration-token "f31QPRizyLSXj2AuH6oM" \
+				--description "Shell Runner" \
+				--executor shell \
+				--builds-dir /home/gitlab-runner/build \
+				--cache-dir /home/gitlab-runner/cache && \
+			\
+			gitlab-runner run --working-directory /home/gitlab-runner'
 		;;
+
 	*) echo 'command not recognized' ;;
 esac
