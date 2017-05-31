@@ -32,3 +32,4 @@ RUN \
   mkdir /scripts
 
 COPY scripts/up.sh /scripts/
+COPY scripts/exec.sh /scripts/

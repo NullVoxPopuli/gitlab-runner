@@ -16,14 +16,15 @@ services:
     # volumes_from:
     #   - config
     volumes:
+      # uncomment and modify to test gitlab-runner locally
+      # - ../project/:/local-current-directory
       - /var/run/docker.sock:/var/run/docker.sock
       - /home/gitlab-runner/build:/home/gitlab-runner/build
       - /home/gitlab-runner/cache:/home/gitlab-runner/cache
       - /home/gitlab-runner:/home/gitlab-runner
       - ./config.toml:/etc/gitlab-runner/config.toml
-      - ./scripts:/scripts
     environment:
       CI_SERVER_URL: "https://gitlab.com/ci"
       RUNNER_NAME: docker-compose-runner
-      REGISTRATION_TOKEN: "AgKSxQwyjahv6zP7t_hA"
+      REGISTRATION_TOKEN: "..."
       REGISTER_NON_INTERACTIVE: 'true'

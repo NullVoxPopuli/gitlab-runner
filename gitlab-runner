@@ -31,16 +31,11 @@ case $given_command in
   exec)   docko -f $config exec gitlab-runner ${@:2};;
   bash)   docko -f $config run --rm gitlab-runner bash;;
   up)     docko -f $config run --rm gitlab-runner /scripts/up.sh ;;
+  go)     docko -f $config run --rm gitlab-runner /scripts/exec.sh ;;
   link)
     ln -s "$PWD/gitlab-runner" "$2/gitlab-runner"
     ln -s "$PWD/config.toml" "$2/config.toml"
     ln -s "$PWD/docker-compose.gitlab.yml" "$2/docker-compose.gitlab.yml"
-    ;;
-  go)
-    docko -f $config run --rm gitlab-runner exec docker \
-    --docker-image "gitlab/dind:latest" \
-    --docker-volumes "[/var/run/docker.sock:/var/run/docker.sock, /home/gitlab-runner:/home/gitlab-runner]" \
-    --docker-privileged
     ;;
   *) echo 'command not recognized' ;;
 esac
