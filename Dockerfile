@@ -28,4 +28,7 @@ RUN apt update -y && \
 RUN \
   curl -L https://packages.gitlab.com/install/repositories/runner/gitlab-ci-multi-runner/script.deb.sh | bash && \
   apt update && \
-  apt install -y gitlab-ci-multi-runner
+  apt install -y gitlab-ci-multi-runner && \
+  mkdir /scripts
+
+COPY scripts/up.sh /scripts/

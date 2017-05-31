@@ -1,10 +1,10 @@
 version: "2"
 services:
   # https://github.com/yarnpkg/yarn/issues/749#issuecomment-253413954
-  gitlab-runner-config:
-    image: busybox
-    volumes:
-      - /etc/gitlab-runner
+  # config:
+  #   image: busybox
+  #   volumes:
+  #     - /etc/gitlab-runner
 
   gitlab-runner:
     build:
@@ -12,17 +12,18 @@ services:
       dockerfile: ./Dockerfile
     restart: always
     privileged: true
-    command: "run --user root --working-directory=/home/gitlab-runner"
-    volumes_from:
-      - gitlab-runner-config
+    command: "gitlab-runner run --executor shell --working-directory=/home/gitlab-runner"
+    # volumes_from:
+    #   - config
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - /home/gitlab-runner/build:/home/gitlab-runner/build
       - /home/gitlab-runner/cache:/home/gitlab-runner/cache
       - /home/gitlab-runner:/home/gitlab-runner
       - ./config.toml:/etc/gitlab-runner/config.toml
+      - ./scripts:/scripts
     environment:
       CI_SERVER_URL: "https://gitlab.com/ci"
       RUNNER_NAME: docker-compose-runner
-      REGISTRATION_TOKEN: "f31QPRizyLSXj2AuH6oM"
+      REGISTRATION_TOKEN: "AgKSxQwyjahv6zP7t_hA"
       REGISTER_NON_INTERACTIVE: 'true'

@@ -2,27 +2,36 @@ concurrent = 4
 check_interval = 0
 
 [[runners]]
-  name = "Docker Runner"
+  name = "Dockerized Shell Runner"
   url = "https://gitlab.com/ci"
-  token = "f31QPRizyLSXj2AuH6oM"
+  token = "00c7d5374493d1ed14449f49d3da7a"
   executor = "shell"
   builds_dir = "/home/gitlab-runner/build"
   cache_dir = "/home/gitlab-runner/cache"
   [runners.cache]
 
 [[runners]]
-  name = "Shell Runner"
+  name = "Dockerized Shell Runner"
   url = "https://gitlab.com/ci"
-  token = "14e276dc04d55314aa2f6caa50f36b"
+  token = "be4d09edad34d32f0d52fb43e6073c"
   executor = "shell"
   builds_dir = "/home/gitlab-runner/build"
   cache_dir = "/home/gitlab-runner/cache"
   [runners.cache]
 
 [[runners]]
-  name = "Shell Runner"
+  name = "Dockerized Shell Runner"
   url = "https://gitlab.com/ci"
-  token = "b93748b4f290f15a82129073bfeff8"
+  token = "41ce03cde61c2f012e8d3805e233ae"
+  executor = "shell"
+  builds_dir = "/home/gitlab-runner/build"
+  cache_dir = "/home/gitlab-runner/cache"
+  [runners.cache]
+
+[[runners]]
+  name = "Dockerized Shell Runner"
+  url = "https://gitlab.com/ci"
+  token = "e6fae7449c3d93859966f5744ac409"
   executor = "shell"
   builds_dir = "/home/gitlab-runner/build"
   cache_dir = "/home/gitlab-runner/cache"

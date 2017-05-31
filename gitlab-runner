@@ -1,16 +1,4 @@
 #!/bin/bash
-
-# options:
-# - daemon
-# - start
-# - register
-# - down
-# - go
-# -link project/path
-#
-# Normal Order of Execution:
-# 1. daemon
-# 2. register
 #
 # To run on a local project:
 # - ln -s path/to/gitlab-runner ./gitlab-runner
@@ -20,7 +8,7 @@ given_command=$1
 config=docker-compose.gitlab.yml
 
 function docko {
-	docker-compose $*
+  docker-compose $*
 }
 
 # gitlab-runner register \
@@ -35,35 +23,24 @@ function docko {
 # gitlab-runner run --working-directory /home/gitlab-runner
 
 case $given_command in
-	down)   docko -f $config down --remove-orphans;;
-	daemon) docko -f $config up -d;;
-	start)  docko -f $config up;;
-	run)    docko -f $config run gitlab-runner ${@:2};;
-	bash)   docko -f $config run --rm gitlab-runner bash;;
-	link)
-		ln -s "$PWD/gitlab-runner" "$2/gitlab-runner"
-		ln -s "$PWD/config.toml" "$2/config.toml"
-		ln -s "$PWD/docker-compose.gitlab.yml" "$2/docker-compose.gitlab.yml"
-		;;
-	go)
-		docko -f $config run --rm gitlab-runner exec docker \
-			--docker-image "gitlab/dind:latest" \
-			--docker-volumes "[/var/run/docker.sock:/var/run/docker.sock, /home/gitlab-runner:/home/gitlab-runner]" \
-			--docker-privileged
-		;;
-	up)
-		docko -f $config run --rm gitlab-runner bash -c '\
-			gitlab-runner register \
-				--url "https://gitlab.com/ci" \
-				--non-interactive \
-				--registration-token "f31QPRizyLSXj2AuH6oM" \
-				--description "Shell Runner" \
-				--executor shell \
-				--builds-dir /home/gitlab-runner/build \
-				--cache-dir /home/gitlab-runner/cache && \
-			\
-			gitlab-runner run --working-directory /home/gitlab-runner'
-		;;
-
-	*) echo 'command not recognized' ;;
+  build)  docko -f $config build ${@:2};;
+  down)   docko -f $config down --remove-orphans;;
+  daemon) docko -f $config up -d;;
+  start)  docko -f $config up;;
+  run)    docko -f $config run gitlab-runner ${@:2};;
+  exec)   docko -f $config exec gitlab-runner ${@:2};;
+  bash)   docko -f $config run --rm gitlab-runner bash;;
+  up)     docko -f $config run --rm gitlab-runner /scripts/up.sh ;;
+  link)
+    ln -s "$PWD/gitlab-runner" "$2/gitlab-runner"
+    ln -s "$PWD/config.toml" "$2/config.toml"
+    ln -s "$PWD/docker-compose.gitlab.yml" "$2/docker-compose.gitlab.yml"
+    ;;
+  go)
+    docko -f $config run --rm gitlab-runner exec docker \
+    --docker-image "gitlab/dind:latest" \
+    --docker-volumes "[/var/run/docker.sock:/var/run/docker.sock, /home/gitlab-runner:/home/gitlab-runner]" \
+    --docker-privileged
+    ;;
+  *) echo 'command not recognized' ;;
 esac

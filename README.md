@@ -1,8 +1,7 @@
 ### Starting The Runner
 
 ```bash
-./gitlab-runner daemon
-./gitlab-runner register
+./gitlab-runner up
 ```
 
 ### Shutting Down
@@ -13,8 +12,8 @@
 
 ### Running Locally
 
-Copy `gitlab-runner`, `config.toml`, and `docker-compose.gitlab.yml` to your project's directory
-
 ```bash
+./gitlab-runner link path/to/project
+cd path/to/project
 ./gitlab-runner go
 ```
