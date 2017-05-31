@@ -12,7 +12,7 @@ services:
       dockerfile: ./Dockerfile
     restart: always
     privileged: true
-    command: "gitlab-runner run --executor shell --working-directory=/home/gitlab-runner"
+    command: "/scripts/up.sh"
     # volumes_from:
     #   - config
     volumes:
