@@ -11,5 +11,5 @@
   ./charts/gitlab-runner
 
 ./helm upgrade gitlab-runner \
-  --set gitlabUrl=https://gitlab.com/ci,runnerRegistrationToken=$GITLAB_CI_TOKEN \
+  --set gitlabUrl=$GITLAB_CI_URL,runnerRegistrationToken=$GITLAB_CI_TOKEN \
   ./charts/gitlab-runner

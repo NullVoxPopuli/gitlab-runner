@@ -1,7 +1,7 @@
 ## GitLab Runner Image
 ## ref: https://hub.docker.com/r/gitlab/gitlab-runner/tags/
 ##
-image: gitlab/gitlab-runner:alpine-v9.1.0
+image: nullvoxpopuli/kubernetes-shell-gitlab-runner
 
 ## Specify a imagePullPolicy
 ## 'Always' if imageTag is 'latest', else set to 'IfNotPresent'
@@ -18,7 +18,7 @@ image: gitlab/gitlab-runner:alpine-v9.1.0
 ## be retreived from your GitLab Instance.
 ## ref: https://docs.gitlab.com/ce/ci/runners/README.html#creating-and-registering-a-runner
 ##
-runnerRegistrationToken: f31QPRizyLSXj2AuH6oM
+# runnerRegistrationToken: ...
 
 ## Configure the maximum number of concurrent jobs
 ## ref: https://docs.gitlab.com/runner/configuration/advanced-configuration.html#the-global-section

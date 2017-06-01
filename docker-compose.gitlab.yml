@@ -26,5 +26,5 @@ services:
     environment:
       CI_SERVER_URL: "https://gitlab.com/ci"
       RUNNER_NAME: docker-compose-runner
-      REGISTRATION_TOKEN: "..."
+      REGISTRATION_TOKEN: "f31QPRizyLSXj2AuH6oM"
       REGISTER_NON_INTERACTIVE: 'true'
