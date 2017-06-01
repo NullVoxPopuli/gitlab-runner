@@ -4,7 +4,14 @@
 cd ./helm
 export GITLAB_CI_TOKEN=f31QPRizyLSXj2AuH6oM
 export GITLAB_CI_URL=https://gitlab.com/ci
-./install-runner
+./gitlab-helm install
+./gitlab-helm register
+```
+
+#### Removing
+
+```
+./gitlab-helm remove
 ```
 
 ## Locally hook in to your gitlab server

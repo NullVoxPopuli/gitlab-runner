@@ -1,6 +1,6 @@
-name: gitlab-runner
+name: k8s-gitlab-shell-runner
 version: 0.1.2
-description: GitLab Runner
+description: GitLab Shell Runner (Docker Compose)
 keywords:
 - git
 - ci
